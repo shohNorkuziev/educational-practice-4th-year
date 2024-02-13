@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ResponseController;
@@ -20,9 +21,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Регистрация, вход, пользователи:
-Route::post('signup', [UserController::class, 'signup']);
+Route::post('signup', [UserController::class, 'store']);
 Route::post('login', [UserController::class, 'login']);
-Route::get('users/{id}', [UserController::class, 'show']);
+Route::get('users/{user}', [UserController::class, 'show']);
+Route::get('users',[UserController::class, 'index']);
+Route::patch('update/{user}',[UserController::class, 'update']);
+Route::delete('delete/{user}',[UserController::class, 'destroy']);
 
 
 //Действия с тегами (в будущем будут доступны только администраторам):
@@ -32,10 +36,10 @@ Route::apiResource('tags', TagController::class)->only(['store', 'index', 'updat
 
 
 //Действия с рекламными предложениями:
-Route::apiResource('applications', ApplicationController::class);
+Route::apiResource('ad', AdController::class);
 
 //Создание отклика на рекламное предложение
-Route::post('responses', [ResponseController::class, 'store']);
+Route::post('application', [ApplicationController::class, 'store']);
 
 //Чат
 Route::get('messages', [MessageController::class, 'index']);

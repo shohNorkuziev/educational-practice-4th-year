@@ -7,70 +7,57 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-    public function signup()
-    {
-        return 'Вы успешно зарегистрировались';
-    }
-
     public function login()
     {
-        return 'Вы успешно аунтефицировались';
+        return response()->json([
+            "message" => "Пользователь аунтефицировался",
+            "auth"=>true
+        ],200);
     }
 
-    public function show(string $id)
-    {
-        return 'Информация о конкретном пользователе';
-    }
-
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $user = User::create($request->all());
+        return response()->json([
+            "message"=>"Пользователь создан",
+            "user"=> $user
+        ],200);
+    }
+
+    public function show(User $user)
+    {
+        $data = User::find($user);
+        return response()->json([
+            "data" => [
+                "data_user" => $data,
+                "message" => "Пользователь найден"
+            ]
+        ],200);
+
     }
 
 
 
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+    public function update(User $user, Request $request)
     {
-        //
+        $user->update($request->all());
+        return $user;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+
+
+    public function index()
     {
-        //
+        return User::all();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return [
+            "message"=>"Пользователь удален"
+        ];
     }
 }
