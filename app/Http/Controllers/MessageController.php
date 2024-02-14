@@ -2,22 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
     public function index()
     {
-        return 'Все сообщения из отклика';
+        $data = Message::all();
+        return response()->json([
+            "allMessage" => $data,
+            "message" => "Все собщения"
+        ],200);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        return 'Все сообщения из отклика';
+        $data = Message::create($request->all());
+        return response()->json([
+            "itemMessage" => $data,
+            "message" => "Сообщение создано"
+        ],200);
     }
 
-    public function show()
+    public function show(Message $message)
     {
-        return 'Все сообщения из отклика';
+        $data = Message::find($message);
+        return response()->json([
+            "message" => $data
+        ],200);
     }
 }

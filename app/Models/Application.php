@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ad extends Model
+class Application extends Model
 {
     use HasFactory;
-    protected $fillable = [
+    protected $fillable =[
+        "ad_id",
         "user_id",
-        "contractor_id",
-        "title",
-        "text",
-        "from",
-        "until"
+        "price",
+        "marked"
     ];
 }

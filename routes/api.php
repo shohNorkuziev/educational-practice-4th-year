@@ -43,5 +43,6 @@ Route::post('application', [ApplicationController::class, 'store']);
 
 //Чат
 Route::get('messages', [MessageController::class, 'index']);
+Route::get('messages/{message:application_id}',[MessageController::class, 'show']);
 Route::post('messages', [MessageController::class, 'store']);
 
