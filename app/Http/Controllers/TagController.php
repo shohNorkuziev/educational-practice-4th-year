@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\tag\TagCreateRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+        public function store(TagCreateRequest $request)
+    {
+        $data = Tag::create($request->validated());
+        return response()->json([
+            "message"=>"Тег создан",
+            "user"=> $data
+        ],200);
+    }
+
     public function index()
     {
         $tag = Tag::all();
@@ -16,15 +26,6 @@ class TagController extends Controller
                 "message" => "Все теги"
             ]
         ]);
-    }
-
-    public function store(Request $request)
-    {
-        $data = Tag::create($request->all());
-        return response()->json([
-            "message"=>"Тег создан",
-            "user"=> $data
-        ],200);
     }
 
     public function update(Request $request, Tag $tag)

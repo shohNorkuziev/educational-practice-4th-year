@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\user\UserAuthRequest;
 use App\Http\Requests\user\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function login()
+    public function login(UserAuthRequest $request)
     {
-        return response()->json([
-            "message" => "Пользователь аунтефицировался",
-            "auth"=>true
-        ],200);
+        if ($request->validated()) {
+            return response()->json([
+                "message" => "Пользователь аунтефицировался",
+                "auth" => true
+            ], 200);
+        }
     }
 
     public function store(UserRequest $request)
     {
         $user = User::create($request->validated());
         return response()->json([
-            "message"=>"Пользователь создан",
-            "user"=> $user
-        ],200);
+            "message" => "Пользователь создан",
+            "user" => $user
+        ], 200);
     }
 
     public function show(User $user)
@@ -33,8 +36,7 @@ class UserController extends Controller
                 "data_user" => $data,
                 "message" => "Пользователь найден"
             ]
-        ],200);
-
+        ], 200);
     }
 
 
@@ -58,7 +60,7 @@ class UserController extends Controller
     {
         $user->delete();
         return [
-            "message"=>"Пользователь удален"
+            "message" => "Пользователь удален"
         ];
     }
 }

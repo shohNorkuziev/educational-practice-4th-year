@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\user;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\api\ApiRequest;
 
-class UserRequest extends FormRequest
+class UserRequest extends ApiRequest
 {
     public function rules(): array
     {
@@ -13,7 +13,8 @@ class UserRequest extends FormRequest
             'last_name'=>['required', 'string', 'alpha'],
             'patronymic'=>['nullable', 'string', 'alpha'],
             'email'=>['required','email:rfc,dns', 'unique:users,email'],
-            'password'=>['required', 'min:5']
+            'password'=>['required', 'min:5'],
+            'role'=>['in:user']
         ];
     }
 }
