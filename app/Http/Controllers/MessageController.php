@@ -25,9 +25,9 @@ class MessageController extends Controller
         ],200);
     }
 
-    public function show(Message $message)
+    public function show($message)
     {
-        $data = Message::find($message);
+        $data = Message::where('application_id' ,$message)->get();
         return response()->json([
             "message" => $data
         ],200);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ad\AdCreateRequest;
+use App\Http\Requests\ad\AdUpdateRequest;
 use App\Models\Ad;
 use Illuminate\Http\Request;
 
@@ -18,15 +20,15 @@ class AdController extends Controller
             ],200);
     }
 
-    public function store(Request $request)
+    public function store(AdCreateRequest $request)
     {
-        $ad = Ad::create($request->all());
+        $ad = Ad::create($request->validated());
         return response()->json([
             "data" => [
                 "ad" =>$ad,
                 "message" => "рекламное предложение создано"
             ]
-        ],204);
+        ],201);
     }
 
     public function show(Ad $ad)
@@ -38,12 +40,12 @@ class AdController extends Controller
         ],200);
     }
 
-    public function update(Request $request, Ad $ad)
+    public function update(AdUpdateRequest $request, Ad $ad)
     {
-        $data = $ad->update($request->all());
+        $data = $ad->update($request->validated());
         return response()->json([
             "data" => [
-                "ad" => $ad,
+                "ad" => $data,
                 "message" => "Рекламное предложение обновлено"
             ]
         ],200);

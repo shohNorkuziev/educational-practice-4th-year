@@ -9,7 +9,7 @@ class TagUpdateRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'name' => ['required']
+            'name' => ['required', 'unique:tags,name']
         ];
     }
 }
