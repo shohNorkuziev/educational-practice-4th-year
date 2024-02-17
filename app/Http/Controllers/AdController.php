@@ -36,7 +36,8 @@ class AdController extends Controller
         $data = Ad::find($ad);
         return response()->json([
             "data" => $data,
-            "message" => "Рекламное предложение найдено"
+            "message" => "Рекламное предложение найдено",
+            "user" => $ad->user
         ],200);
     }
 

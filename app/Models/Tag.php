@@ -11,4 +11,8 @@ class Tag extends Model
     protected $fillable = [
         'name'
     ];
+    public function ad()
+    {
+        return $this->belongsToMany(Ad::class, 'ad_tags');
+    }
 }

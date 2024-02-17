@@ -16,4 +16,28 @@ class Ad extends Model
         "from",
         "until"
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function constractor()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function application()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    public function image()
+    {
+        return $this->hasMany(Image::class);
+    }
+    public function tag()
+    {
+        return $this->belongsToMany(Tag::class, 'ad_tags')->withTimestamps();
+    }
 }
+

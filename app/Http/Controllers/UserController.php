@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\user\UserAuthRequest;
 use App\Http\Requests\user\UserRequest;
+use App\Http\Resources\user\UserAuthResource;
+use App\Http\Resources\user\UserCreateResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,20 +14,14 @@ class UserController extends Controller
     public function login(UserAuthRequest $request)
     {
         if ($request->validated()) {
-            return response()->json([
-                "message" => "Пользователь аунтефицировался",
-                "auth" => true
-            ], 200);
+            return (new UserAuthResource($request))->response()->setStatusCode(200);
         }
     }
 
     public function store(UserRequest $request)
     {
         $user = User::create($request->validated());
-        return response()->json([
-            "message" => "Пользователь создан",
-            "user" => $user
-        ], 200);
+        return (new UserCreateResource($user))->response()->setStatusCode(201);
     }
 
     public function show(User $user)
