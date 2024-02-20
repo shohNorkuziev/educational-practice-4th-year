@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources\user;
+namespace App\Http\Resources\application;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
 
-class UserAuthResource extends JsonResource
+class ApplicationCreateResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +15,12 @@ class UserAuthResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "token" => Auth::user()->createToken('api')->plainTextToken()
+            'id' => $this->id,
+            'ad' => [
+                'id' => $this->ad->id,
+                'name' => $this->ad->title
+            ],
+            'price' => $this->price
         ];
     }
 }

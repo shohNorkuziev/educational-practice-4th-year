@@ -14,7 +14,7 @@ class Application extends Model
         "price",
         "marked"
     ];
-    public function message()
+    public function messages()
     {
         return $this->hasMany(Message::class);
     }

@@ -8,12 +8,12 @@ class AdUpdateRequest extends ApiRequest
 {    public function rules(): array
     {
         return [
-            'user_id' => ['required','exists:users,id'],
-            'contractor_id' => ['required','exists:users,id', 'different:user_id'],
-            'title' => ['required','string','max:150'],
-            'text' => ['required','string'],
-            'from' => ['required','date','after:tomorrow'],
-            'until' => ['required','date','after:from'],
+            'user_id' => ['sometimes','exists:users,id'],
+            'contractor_id' => ['sometimes','exists:users,id', 'different:user_id'],
+            'title' => ['sometimes','string','max:150'],
+            'text' => ['sometimes','string'],
+            'from' => ['sometimes','date','after:tomorrow'],
+            'until' => ['sometimes','date','after:from'],
             'tags' => ['nullable','array'],
             'tags.*' => ['exists:tags,id']
         ];

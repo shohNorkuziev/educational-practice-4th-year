@@ -8,14 +8,24 @@ use App\Http\Resources\user\UserAuthResource;
 use App\Http\Resources\user\UserCreateResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function login(UserAuthRequest $request)
     {
-        if ($request->validated()) {
-            return (new UserAuthResource($request))->response()->setStatusCode(200);
-        }
+            if (Auth::attempt($request->only(['email', 'password'])))
+            {
+                Auth::user()->tokens()->delete();
+                return response()->json([
+                    'token' => Auth::user()->createToken('api')->plainTextToken
+                ]);
+            }
+            else{
+                return response()->json([
+                    'message' => 'not auth'
+                ]);
+            }
     }
 
     public function store(UserRequest $request)

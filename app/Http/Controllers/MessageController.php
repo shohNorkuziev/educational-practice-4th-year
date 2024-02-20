@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\message\MessageAllResource;
+use App\Http\Resources\message\MessageCreateResource;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
@@ -10,19 +12,13 @@ class MessageController extends Controller
     public function index()
     {
         $data = Message::all();
-        return response()->json([
-            "allMessage" => $data,
-            "message" => "Все собщения"
-        ],200);
+        return MessageAllResource::make($data);
     }
 
     public function store(Request $request)
     {
         $data = Message::create($request->all());
-        return response()->json([
-            "itemMessage" => $data,
-            "message" => "Сообщение создано"
-        ],200);
+        return MessageCreateResource::make($data);
     }
 
     public function show($message)

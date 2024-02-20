@@ -25,8 +25,11 @@ Route::post('signup', [UserController::class, 'store']);
 Route::post('login', [UserController::class, 'login']);
 Route::get('users/{user}', [UserController::class, 'show']);
 Route::get('users',[UserController::class, 'index']);
-Route::patch('update/{user}',[UserController::class, 'update']);
-Route::delete('delete/{user}',[UserController::class, 'destroy']);
+Route::middleware('auth:sanctum')->group(function(){
+    Route::patch('update/{user}',[UserController::class, 'update']);
+    Route::delete('delete/{user}',[UserController::class, 'destroy']);
+});
+
 
 
 //Действия с тегами (в будущем будут доступны только администраторам):

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ad\AdCreateRequest;
 use App\Http\Requests\ad\AdUpdateRequest;
+use App\Http\Resources\ad\AdAllResource;
+use App\Http\Resources\ad\AdCreateResource;
+use App\Http\Resources\ad\AdOneResource;
+use App\Http\Resources\ad\AdUpdateResource;
 use App\Models\Ad;
 use Illuminate\Http\Request;
 
@@ -12,51 +16,37 @@ class AdController extends Controller
     public function index()
     {
         $ad = Ad::all();
-        return response()->json([
-            "data" => [
-                "Ad" => $ad,
-                "message" => "Все пользователи"
-            ]
-            ],200);
+        return AdAllResource::make($ad);
     }
 
     public function store(AdCreateRequest $request)
     {
         $ad = Ad::create($request->validated());
-        return response()->json([
-            "data" => [
-                "ad" =>$ad,
-                "message" => "рекламное предложение создано"
-            ]
-        ],201);
+        if($request->filled('tags')){
+            $ad->tags()->sync($request->tags);
+        }
+        return new AdCreateResource($ad);
     }
 
     public function show(Ad $ad)
     {
-        $data = Ad::find($ad);
-        return response()->json([
-            "data" => $data,
-            "message" => "Рекламное предложение найдено",
-            "user" => $ad->user
-        ],200);
+        Ad::find($ad);
+
+        return AdOneResource::make($ad);
     }
 
     public function update(AdUpdateRequest $request, Ad $ad)
     {
         $data = $ad->update($request->validated());
-        return response()->json([
-            "data" => [
-                "ad" => $data,
-                "message" => "Рекламное предложение обновлено"
-            ]
-        ],200);
+        $ad->tags()->sync($request->tags);
+        return AdUpdateResource::make($ad);
     }
 
     public function destroy(Ad $ad)
     {
         $ad->delete();
         return response()->json([
-            "message" => "Удалена реклама " .$ad['title']
-        ],200);
+
+        ],204);
     }
 }

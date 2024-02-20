@@ -21,23 +21,23 @@ class Ad extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function constractor()
+    public function contractor()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function application()
+    public function applications()
     {
         return $this->hasMany(Application::class);
     }
 
-    public function image()
+    public function images()
     {
         return $this->hasMany(Image::class);
     }
-    public function tag()
+    public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'ad_tags')->withTimestamps();
+        return $this->belongsToMany(Tag::class, 'ad_tags');
     }
 }
 

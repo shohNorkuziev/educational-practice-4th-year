@@ -45,11 +45,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function message()
+    public function messages()
     {
         return $this->hasMany(Message::class);
     }
-    public function application()
+    public function applications()
     {
         return $this->hasMany(Application::class);
     }

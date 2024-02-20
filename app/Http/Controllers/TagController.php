@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\tag\TagCreateRequest;
 use App\Http\Requests\tag\TagUpdateRequest;
+use App\Http\Resources\tag\TagAllResource;
 use App\Http\Resources\tag\TagCreateResource;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -19,25 +20,20 @@ class TagController extends Controller
     public function index()
     {
         $tag = Tag::all();
-        return (new TagCreateResource($tag))->response()->setStatusCode(200);
+        return new TagAllResource($tag);
     }
 
     public function update(TagUpdateRequest $request, Tag $tag)
     {
         $tag->update($request->validated());
-        return response()->json([
-            "data" => [
-                "tag" => $tag,
-                "message" => "Тег обновлен"
-            ]
-        ]);
+        return new TagCreateResource($tag);
     }
 
     public function destroy(Tag $tag)
     {
         $tag->delete();
         return response()->json([
-            "message" => "Тег удален"
-        ]);
+
+        ],204);
     }
 }
