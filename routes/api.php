@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\TagController;
@@ -49,3 +50,5 @@ Route::get('messages', [MessageController::class, 'index']);
 Route::get('messages/{message}',[MessageController::class, 'show']);
 Route::post('messages', [MessageController::class, 'store']);
 
+Route::apiResource('/images', ImageController::class)->only('store');
+Route::get('/download/images/{image}',[ImageController::class,'download']);
